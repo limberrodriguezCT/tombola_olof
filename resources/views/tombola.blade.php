@@ -10,75 +10,202 @@
         .patron-fondo {
             background-color: #000000;
             background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 18h-2v-2h2v2zm-2 2v2h2v-2h-2zm2 2h2v-2h-2v2zm2-2v-2h-2v2h2z' fill='%23111111' fill-opacity='1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* Contenedor principal con espacio garantizado abajo para el scroll */
+        .contenedor-central {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 2rem 1rem 7rem 1rem;
+            text-align: center;
+        }
+
+        .titulo-tombola {
+            font-size: clamp(3rem, 6vw, 4.5rem);
+            font-weight: 900;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+            text-shadow: 0 5px 10px rgba(220, 38, 38, 0.5);
+            line-height: 1.1;
+        }
+
+        .subtitulo-tombola {
+            font-size: clamp(1.25rem, 3vw, 1.875rem);
+            font-weight: 700;
+            color: #ef4444;
+            text-transform: uppercase;
+            margin-bottom: 3.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Animación de carga original en CSS puro (indestructible) */
+        .caja-loader {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 2.5rem auto;
+        }
+
+        .aro-giratorio {
+            width: 120px;
+            height: 120px;
+            border: 5px solid #1f2937;
+            border-top: 5px solid #dc2626;
+            border-radius: 50%;
+            animation: girar 1s linear infinite;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes girar {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Tarjeta del ganador con márgenes fijos */
+        .tarjeta-ganador {
+            display: none;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.96);
+            border-radius: 1.5rem;
+            padding: 3rem 2rem;
+            box-shadow: 0 25px 60px rgba(220, 38, 38, 0.3);
+            border-bottom: 12px solid #b91c1c;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .tarjeta-ganador.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Botón principal con separación garantizada */
+        .btn-tombola {
+            background-color: #dc2626;
+            color: #ffffff;
+            font-size: 1.75rem;
+            font-weight: 900;
+            padding: 1.25rem 3.5rem;
+            border-radius: 9999px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 40px rgba(220, 38, 38, 0.8);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-tombola:hover {
+            background-color: #991b1b;
+            transform: scale(1.05);
+        }
+
+        .insignia-depto {
+            background-color: #f3f4f6;
+            color: #374151;
+            padding: 0.6rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 1rem;
+            border: 1px solid #e5e7eb;
+            display: inline-block;
+        }
+
+        .insignia-tipo {
+            background-color: #dc2626;
+            color: #ffffff;
+            padding: 0.6rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+            display: inline-block;
         }
     </style>
 </head>
-<body class="font-sans antialiased patron-fondo min-h-screen flex flex-col overflow-x-hidden overflow-y-auto">
+<body class="font-sans antialiased patron-fondo">
 
     <!-- Texto Superior Minimalista -->
-    <div class="w-full text-center pt-8 pb-4 px-4 z-50">
-        <h2 class="text-sm md:text-base font-bold text-gray-300 tracking-widest uppercase drop-shadow-md">Centro Tecnológico Olof Palme</h2>
-        <a href="{{ route('dashboard') }}" class="inline-block mt-4 text-gray-400 hover:text-white text-xs transition-colors border border-gray-600 hover:border-white rounded-full px-6 py-2 bg-white/5">
+    <div style="width: 100%; text-align: center; padding-top: 2rem; padding-bottom: 1rem; z-index: 50;">
+        <h2 style="color: #d1d5db; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.95rem;">
+            Centro Tecnológico Olof Palme
+        </h2>
+        <a href="{{ route('dashboard') }}" style="display: inline-block; margin-top: 1rem; color: #9ca3af; font-size: 0.75rem; border: 1px solid #4b5563; border-radius: 9999px; padding: 0.5rem 1.5rem; background: rgba(255,255,255,0.05); text-decoration: none;">
             Volver al Panel
         </a>
     </div>
 
-    <!-- Contenedor Principal (Flujo natural hacia abajo) -->
-    <div class="flex-grow flex items-center justify-center w-full px-4 pt-12 pb-24">
-        <div class="z-10 text-center w-full max-w-5xl">
+    <!-- Contenedor Central -->
+    <div class="contenedor-central">
+        
+        <h1 class="titulo-tombola">GRAN TÓMBOLA</h1>
+        <p class="subtitulo-tombola">Soñando y Creciendo en Grande - 2027</p>
+
+        <!-- Tarjeta del Ganador -->
+        <div id="winner-card" class="tarjeta-ganador">
+            <h2 style="font-size: 1.1rem; font-weight: 900; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.25em; margin-bottom: 1.5rem;">
+                🏆 ¡Felicidades al Ganador! 🏆
+            </h2>
             
-            <h1 class="text-6xl md:text-7xl font-black text-white mb-4 drop-shadow-[0_5px_5px_rgba(220,38,38,0.5)] tracking-widest uppercase">
-                GRAN TÓMBOLA
-            </h1>
-            <p class="text-red-500 text-2xl md:text-3xl mb-16 font-bold drop-shadow-lg uppercase">Soñando y Creciendo en Grande - 2027</p>
-
-            <!-- Tarjeta del Ganador -->
-            <div id="winner-card" class="hidden mx-auto w-full bg-white/95 backdrop-blur-sm rounded-3xl p-12 shadow-[0_25px_60px_rgba(220,38,38,0.3)] transform transition-all duration-700 scale-95 opacity-0 border-b-[12px] border-red-700">
-                <h2 class="text-lg font-black text-gray-400 uppercase tracking-[0.3em] mb-6 flex items-center justify-center space-x-3">
-                    <span>🏆</span>
-                    <span>¡Felicidades al Ganador!</span>
-                    <span>🏆</span>
-                </h2>
-                
-                <div id="winner-main-info" class="text-4xl md:text-5xl lg:text-6xl font-black text-black mb-8 leading-tight drop-shadow-sm"></div>
-                
-                <div class="flex justify-center space-x-4 mt-6 border-t border-gray-200 pt-8">
-                    <span id="winner-depto" class="inline-block bg-gray-100 text-gray-700 px-6 py-2.5 rounded-full text-base font-bold shadow-inner border border-gray-200"></span>
-                    <span id="winner-tipo" class="inline-block bg-red-600 text-white px-6 py-2.5 rounded-full text-base font-bold shadow-md"></span>
-                </div>
+            <div id="winner-main-info" style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 900; color: #000000; margin-bottom: 2rem; line-height: 1.2;"></div>
+            
+            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; border-top: 1px solid #e5e7eb; padding-top: 2rem;">
+                <span id="winner-depto" class="insignia-depto"></span>
+                <span id="winner-tipo" class="insignia-tipo"></span>
             </div>
-
-            <!-- Animación de Carga Robusta -->
-            <div id="loading-animation" class="hidden my-16">
-                <div class="relative w-32 h-32 mx-auto">
-                    <div class="absolute inset-0 border-4 border-gray-800 rounded-full"></div>
-                    <div class="absolute inset-0 border-4 border-red-600 rounded-full border-t-transparent animate-spin"></div>
-                </div>
-                <p class="text-white mt-8 text-2xl font-bold animate-pulse tracking-wider">Generando ganador al azar...</p>
-            </div>
-
-            <!-- Botón de Acción -->
-            <button id="spin-btn" class="mt-8 bg-red-600 hover:bg-red-800 text-white text-3xl font-black py-6 px-16 rounded-full shadow-[0_0_40px_rgba(220,38,38,0.8)] transition-all transform hover:scale-105 active:scale-95 inline-flex items-center justify-center mx-auto space-x-4 border-2 border-white/20">
-                <span>🎉</span>
-                <span>Sacar Ganador</span>
-                <span>🎉</span>
-            </button>
-
         </div>
+
+        <!-- Animación de Carga (Idéntica al diseño anterior) -->
+        <div id="loading-animation" class="caja-loader">
+            <div class="aro-giratorio"></div>
+            <p style="color: #ffffff; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.05em;">
+                Generando ganador al azar...
+            </p>
+        </div>
+
+        <!-- Botón de Acción -->
+        <button id="spin-btn" class="btn-tombola">
+            <span>🎉</span>
+            <span id="btn-text">Sacar Ganador</span>
+            <span>🎉</span>
+        </button>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
         document.getElementById('spin-btn').addEventListener('click', function() {
             const btn = this;
+            const btnText = document.getElementById('btn-text');
             const winnerCard = document.getElementById('winner-card');
             const loading = document.getElementById('loading-animation');
 
+            // Ocultar botón y tarjeta, mostrar spinner
             btn.disabled = true;
-            winnerCard.classList.add('hidden', 'scale-95', 'opacity-0');
-            winnerCard.classList.remove('scale-100', 'opacity-100');
-            loading.classList.remove('hidden');
-            btn.classList.add('hidden');
+            btn.style.display = 'none';
+            winnerCard.classList.remove('visible');
+            winnerCard.style.display = 'none';
+            loading.style.display = 'flex';
 
             fetch('{{ route("tombola.winner") }}')
                 .then(response => response.json())
@@ -92,41 +219,37 @@
                             background: '#111111', 
                             color: '#fff' 
                         });
-                        loading.classList.add('hidden');
-                        btn.classList.remove('hidden');
+                        loading.style.display = 'none';
+                        btn.style.display = 'inline-flex';
                         btn.disabled = false;
                         return;
                     }
 
                     setTimeout(() => {
-                        loading.classList.add('hidden');
+                        loading.style.display = 'none';
                         
                         const mainInfoText = `${data.nombre_completo} - ${data.centro_procedencia}`;
                         document.getElementById('winner-main-info').textContent = mainInfoText;
-                        
                         document.getElementById('winner-depto').textContent = `📍 ${data.departamento}`;
                         document.getElementById('winner-tipo').textContent = data.tipo_procedencia;
 
-                        winnerCard.classList.remove('hidden');
+                        winnerCard.style.display = 'block';
                         
                         setTimeout(() => {
-                            winnerCard.classList.remove('scale-95', 'opacity-0');
-                            winnerCard.classList.add('scale-100', 'opacity-100');
-                            
+                            winnerCard.classList.add('visible');
                             winnerCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            
                             triggerConfetti();
                         }, 50);
 
                         btn.disabled = false;
-                        btn.classList.remove('hidden');
-                        btn.innerHTML = "<span>🔄</span><span>Sacar Otro Ganador</span>";
+                        btnText.textContent = "Sacar Otro Ganador";
+                        btn.style.display = 'inline-flex';
                     }, 3000); 
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    loading.classList.add('hidden');
-                    btn.classList.remove('hidden');
+                    loading.style.display = 'none';
+                    btn.style.display = 'inline-flex';
                     btn.disabled = false;
                     Swal.fire({ 
                         icon: 'error', 
